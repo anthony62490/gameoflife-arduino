@@ -3,13 +3,13 @@
 An Arduino implementation of Conway's game. Used as an excuse to learn basic electrical engineering. This widget will hopefully evolve into a compact desk toy that plays the Game of Life over and over again forever.
 
 ### Important Points Checklist:
-  * Make an Arduino program to control an 8x8 LED matrix
+  * ~~Make an Arduino program to control an 8x8 LED matrix~~
   * Simulate a random board of GoL
   * Count the number of generations until the board either dies or stagnates
   * Save a copy of every board and the number of generations it lasted
   * ~~Install an SD card reader~~
   * Implement a local storage system on the SD card
-  * Intstall a 4x4 button matrix
+  * ~~Install a 4x4 button matrix~~
   * Program each button to control a 2x2 sector of LEDs
   * Write a system to gracefully handle user interaction
   * Install an external power source
@@ -32,7 +32,8 @@ Each board in storage should indicate its initial setup and its edge mode, eithe
 #### Parts needed to reproduce
   * Arduino Uno
   * SD card shield (I used a Catalex MicroSD Card Adapter v1.0 11/01/2013)
-  * 8x8 LED matrix
+  * 8x8 LED matrix (mine is a 1088AS with a 5-pin board)
+  * Access to a 3d printer
   * Some other stuff. I'll fill this in as I go
 
 #### Progress and notes
