@@ -5,6 +5,8 @@ void step();
 int getNeighborsWrap(int cell);
 int getNeighborsBound(int cell);
 void printCurrentBoard();
+void newBoard();
+bool boardIsStale();
 
 /*
  Now we need a LedControl to work with.
@@ -15,13 +17,15 @@ void printCurrentBoard();
  We have only a single MAX72XX.
  */
 LedControl lc=LedControl(12,11,10,1);
+// Globals
 bool a [64], b [64];
 bool *board = a;
 bool *temp = b;
 bool wrap = true;
+int generation = 1;
 
 /* we always wait a bit between updates of the display */
-unsigned long delaytime=300;
+unsigned long delaytime=200;
 
 void setup() {
   Serial.begin(9600);
@@ -34,15 +38,8 @@ void setup() {
   lc.setIntensity(0,8);
   /* and clear the display */
   lc.clearDisplay(0);
-    Serial.println("Start game");
-    for(int i=0; i<64; i++){
-        board[i] = 0;
-    }
-    board[1] = 1;
-    board[10] = 1;
-    board[16] = 1;
-    board[17] = 1;
-    board[18] = 1;
+  Serial.println("Start game");
+  newBoard();
 }
 
 void step() {  
@@ -58,7 +55,6 @@ void step() {
         } else if(neighbors == 3) {
             temp[i] = 1;
         } else if(neighbors == 2) {
-            Serial.println(temp[i]);
             temp[i] = board[i];
         } else if(neighbors <= 1) {
             temp[i] = 0;
@@ -159,9 +155,34 @@ void printCurrentBoard() {
     }
 }
 
+void newBoard() {
+    const int seed = analogRead(0);
+    Serial.print("New Seed: ");
+    Serial.println(seed);
+    randomSeed(seed);
+    // Set each light to a 1 or 0
+    for(int i=0; i<64; i++){
+        board[i] = random(0,2);
+    }
+}
+
+bool boardIsStale() {
+    // TODO: This does not account for oscillators
+    for(int i=0; i<64; i++){
+        if (board[i] != temp[i]) {
+            return false;
+        }
+    }
+    return true;
+}
 
 void loop() {
     printCurrentBoard();
     delay(delaytime);
     step();
+    if (boardIsStale()) {
+        generation++;
+        newBoard();
+        Serial.println("Game #" + String(generation));
+    }
 }
