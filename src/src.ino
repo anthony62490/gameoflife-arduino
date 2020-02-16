@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #define onboard 13
 
 void setup() 
@@ -8,8 +7,8 @@ void setup()
 
 void loop()
 {
-  digitalWrite(onboard, LOW);
-  delay(10);
-  digitalWrite(onboard, HIGH);
+  digitalWrite(onboard, 0);
+  delay(300);
+  digitalWrite(onboard, 1);
   delay(1000);
 }
